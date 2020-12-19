@@ -11,6 +11,9 @@ const main = async () => {
   const orm = await MikroORM.init(microConfig);
   await orm.getMigrator().up();
 
+  // const post = orm.em.create(Post, { title: 'myfirst post' })
+  // await orm.em.persistAndFlush(post)
+
   const app = express();
 
   const apolloServer = new ApolloServer({
