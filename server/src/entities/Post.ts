@@ -20,4 +20,3 @@ export class Post {
   @Property({ type: 'text' })
   title!: string;
 }
-
