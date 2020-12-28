@@ -12,7 +12,7 @@ import NextLink from 'next/link';
 
 const Login = () => {
   const [, login] = useLoginMutation();
-  const route = useRouter();
+  const router = useRouter();
 
   return (
     <Wrapper variant={'small'}>
@@ -23,7 +23,11 @@ const Login = () => {
           if (response.data?.login.errors) {
             setErrors(toErrorMap(response.data.login.errors));
           } else if (response.data?.login.user) {
-            route.push('/');
+            if (typeof router.query.next === 'string') {
+              router.push(router.query.next);
+            } else {
+              router.push('/');
+            }
           }
         }}
       >
