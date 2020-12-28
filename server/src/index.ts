@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import Redis from 'ioredis';
+import path from 'path';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
@@ -21,10 +22,12 @@ const main = async () => {
     database: 'lireddit2',
     username: 'postgres',
     password: 'postgres',
-    logging: true,
+    logging: true, 
     synchronize: true,
+    migrations: [path.join(__dirname, './migrations/*')],
     entities: [Post, User],
   });
+  await conn.runMigrations();
 
   const app = express();
 
