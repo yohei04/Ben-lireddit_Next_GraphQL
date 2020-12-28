@@ -4,11 +4,13 @@ import {
   Arg,
   Ctx,
   Field,
+  FieldResolver,
   InputType,
   Int,
   Mutation,
   Query,
   Resolver,
+  Root,
   UseMiddleware,
 } from 'type-graphql';
 import { Post } from '../entities/Post';
@@ -22,8 +24,13 @@ class PostInput {
   text: string;
 }
 
-@Resolver()
-export class PostResolver { 
+@Resolver(Post)
+export class PostResolver {
+  @FieldResolver(() => String)
+  textSnippet(@Root() root: Post) {
+    return root.text.slice(0, 50);
+  }
+
   @Query(() => [Post])
   posts(
     @Arg('limit', () => Int) limit: number,
@@ -35,7 +42,7 @@ export class PostResolver {
       .createQueryBuilder('p')
       .orderBy('"createdAt"', 'DESC')
       .take(realLimit);
-    
+
     if (cursor) {
       qb.where('"createdAt" < :cursor', {
         cursor: new Date(parseInt(cursor)),
