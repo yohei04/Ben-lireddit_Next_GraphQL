@@ -16,6 +16,7 @@ import { PostResolver } from './resolvers/post';
 import { UserResolver } from './resolvers/user';
 import { MyContext } from './types';
 
+
 const main = async () => {
   const conn = await createConnection({
     type: 'postgres',
@@ -28,6 +29,8 @@ const main = async () => {
     entities: [Post, User],
   });
   await conn.runMigrations();
+
+  // await Post.delete({})
 
   const app = express();
 
