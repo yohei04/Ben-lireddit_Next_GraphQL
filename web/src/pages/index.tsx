@@ -45,8 +45,13 @@ const Index = () => {
           {data?.posts.posts.map((p) => (
             <Flex key={p.id} p={5} shadow="md" borderWidth="1px">
               <UpdootSection post={p} />
+
               <Box key={p.id} p={5} shadow="md" borderWidth="1px">
-                <Heading fontSize="xl">{p.title}</Heading>
+                <NextLink href={`/post/${p.id}`}>
+                  <Link>
+                    <Heading fontSize="xl">{p.title}</Heading>
+                  </Link>
+                </NextLink>
                 <Text>posted by {p.creator.username}</Text>
                 <Text mt={4}>{p.textSnippet}</Text>
               </Box>
@@ -56,6 +61,7 @@ const Index = () => {
       )}
       {data && data.posts.hasMore && (
         <Flex>
+          65555
           <Button
             isLoading={fetching}
             m="auto"
